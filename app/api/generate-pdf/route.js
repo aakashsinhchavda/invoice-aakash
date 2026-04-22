@@ -1,14 +1,10 @@
 import { NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+import { getBrowser } from '@/lib/pdf';
 
 export async function POST(req) {
   try {
     const { html } = await req.json();
-
-    const browser = await puppeteer.launch({
-      headless: "new",
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--font-render-hinting=none'],
-    });
+    const browser = await getBrowser();
 
     const page = await browser.newPage();
     

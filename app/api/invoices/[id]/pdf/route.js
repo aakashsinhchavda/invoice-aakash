@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Invoice from '@/models/Invoice';
-import puppeteer from 'puppeteer';
+import { getBrowser } from '@/lib/pdf';
 import React from 'react';
-
 import InvoiceTemplate from '@/components/InvoiceTemplate';
 
 export async function GET(req, { params }) {
@@ -19,7 +18,7 @@ export async function GET(req, { params }) {
     // Prepare data for template
     const invoiceData = {
       ...invoice.toObject(),
-      vendor: invoice.vendorId // The template expects 'vendor' object
+      vendor: invoice.vendorId 
     };
 
     // Render HTML
@@ -45,11 +44,7 @@ export async function GET(req, { params }) {
       </html>
     `;
 
-    const browser = await puppeteer.launch({
-      headless: "new",
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--font-render-hinting=none'],
-    });
-
+    const browser = await getBrowser();
     const page = await browser.newPage();
     
     await page.setViewport({
