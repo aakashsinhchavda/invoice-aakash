@@ -21,7 +21,7 @@ const InvoiceTemplate = ({ data }) => {
 
   const Logo = () => (
     <img
-      src="logo.png"
+      src="/logo.png"
       alt="SW Logo"
       className="w-16 h-auto"
     />
@@ -166,10 +166,10 @@ const InvoiceTemplate = ({ data }) => {
                     <tr className="align-top text-[10.5px] font-bold">
                       <td className="border-r-[1.2px] border-black p-1 text-center">{String((index + 1) * 10).padStart(5, '0')}</td>
                       <td className="border-r-[1.2px] border-black p-1 px-2 uppercase relative">
-                         {item.description}
-                         <div className="absolute right-2 top-1 italic font-black text-[10px]">
-                            CGST<br />SGST
-                         </div>
+                        {item.description}
+                        <div className="absolute right-2 top-1 italic font-black text-[10px]">
+                          CGST<br />SGST
+                        </div>
                       </td>
                       <td className="border-r-[1.2px] border-black p-1 text-center">{item.sac}</td>
                       <td className="border-r-[1.2px] border-black p-1 text-center underline font-black">{item.qty}</td>
@@ -177,13 +177,13 @@ const InvoiceTemplate = ({ data }) => {
                       <td className="border-r-[1.2px] border-black p-1 text-right">
                         {formatCurrency(item.rate)}
                         <div className="mt-0 italic font-black text-[9.5px]">
-                           9.00 %<br />9.00 %
+                          9.00 %<br />9.00 %
                         </div>
                       </td>
                       <td className="p-1 text-right font-black">
                         {formatCurrency(item.amount)}
                         <div className="mt-0 text-[10px]">
-                           {formatCurrency(itemCGST)}<br />{formatCurrency(itemSGST)}
+                          {formatCurrency(itemCGST)}<br />{formatCurrency(itemSGST)}
                         </div>
                       </td>
                     </tr>
@@ -208,8 +208,8 @@ const InvoiceTemplate = ({ data }) => {
                       <tr key={sIdx} className="align-top text-[10px]">
                         <td className="border-r-[1.2px] border-black p-1 text-right font-bold pr-2">{child.label}</td>
                         <td className="border-r-[1.2px] border-black p-1 px-2 uppercase">
-                           {child.description}
-                           {child.notes && <p className="text-[8.5px] italic text-gray-500 mt-0.5">{child.notes}</p>}
+                          {child.description}
+                          {child.notes && <p className="text-[8.5px] italic text-gray-500 mt-0.5">{child.notes}</p>}
                         </td>
                         <td className="border-r-[1.2px] border-black p-1"></td>
                         <td className="border-r-[1.2px] border-black p-1 text-center font-bold">{child.qty}</td>
