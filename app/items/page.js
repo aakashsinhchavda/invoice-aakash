@@ -96,18 +96,18 @@ const ItemsLibraryPage = () => {
   );
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
-      <header className="mb-8 flex justify-between items-end">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto">
+      <header className="mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">Service Library</h1>
-          <p className="text-gray-500 mt-1">Pre-define complex service categories and hierarchical details.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Service Library</h1>
+          <p className="text-gray-500 mt-1 text-sm md:text-base">Pre-define complex service categories and hierarchical details.</p>
         </div>
         <button 
           onClick={() => {
             setCurrentItem({ title: '', sac: '', unit: 'AU', defaultChildren: [] });
             setShowModal(true);
           }}
-          className="bg-green-600 text-white px-6 py-3 rounded-xl font-bold flex items-center shadow-lg shadow-green-200 hover:bg-green-700 transition-all"
+          className="bg-green-600 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-green-200 hover:bg-green-700 transition-all w-full md:w-auto"
         >
           <Plus className="w-5 h-5 mr-2" />
           Create Service Group

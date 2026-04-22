@@ -242,7 +242,7 @@ const InvoiceForm = ({ onPreviewUpdate, onDownload }) => {
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
           <label className="block text-xs font-bold text-gray-400 uppercase mb-1 px-1">PO Number</label>
           <input 
@@ -285,7 +285,7 @@ const InvoiceForm = ({ onPreviewUpdate, onDownload }) => {
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
           <label className="block text-xs font-bold text-gray-400 uppercase mb-1 px-1">Job State Code</label>
           <input 
@@ -328,8 +328,8 @@ const InvoiceForm = ({ onPreviewUpdate, onDownload }) => {
                 <Trash2 className="w-4 h-4" />
               </button>
               
-              <div className="grid grid-cols-12 gap-3 mb-4">
-                <div className="col-span-12 flex space-x-2">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-4">
+                <div className="col-span-12 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-2">
                   <div className="flex-1">
                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 px-1">Service Category</label>
                     <input 
@@ -339,7 +339,7 @@ const InvoiceForm = ({ onPreviewUpdate, onDownload }) => {
                       onChange={(e) => handleItemChange(index, 'description', e.target.value)}
                     />
                   </div>
-                  <div className="w-40 mr-1">
+                  <div className="w-full sm:w-40">
                     <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 px-1 flex items-center">
                       <Library className="w-2.5 h-2.5 mr-1" />
                       Library
@@ -356,15 +356,15 @@ const InvoiceForm = ({ onPreviewUpdate, onDownload }) => {
                     </select>
                   </div>
                 </div>
-                <div className="col-span-4">
+                <div className="col-span-12 sm:col-span-4">
                    <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 px-1">SAC Code</label>
                    <input className="w-full p-2 text-xs border rounded-lg bg-white" value={item.sac} onChange={(e) => handleItemChange(index, 'sac', e.target.value)} />
                 </div>
-                <div className="col-span-4">
+                <div className="col-span-12 sm:col-span-4">
                   <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 px-1">Unit</label>
                   <input className="w-full p-2 text-xs border rounded-lg bg-white uppercase" value={item.unit} onChange={(e) => handleItemChange(index, 'unit', e.target.value)} />
                 </div>
-                <div className="col-span-4 pt-4 px-1">
+                <div className="col-span-12 sm:col-span-4 pt-1 sm:pt-4 px-1">
                    <button 
                     onClick={() => saveToLibrary(index)}
                     className="w-full h-9 flex items-center justify-center bg-white text-green-600 border border-green-200 rounded-lg text-[10px] font-bold uppercase hover:bg-green-50"
@@ -376,57 +376,64 @@ const InvoiceForm = ({ onPreviewUpdate, onDownload }) => {
               </div>
 
               {/* Sub-items (Children) */}
-              <div className="ml-4 pl-4 border-l-2 border-blue-100 space-y-2">
+              <div className="ml-0 sm:ml-4 pl-0 sm:pl-4 border-l-0 sm:border-l-2 border-blue-100 space-y-2">
                 {item.children?.map((child, sIdx) => (
-                  <div key={sIdx} className="grid grid-cols-12 gap-2 bg-white p-2 rounded-xl border border-gray-100 relative group/sub">
+                  <div key={sIdx} className="bg-white p-3 rounded-xl border border-gray-100 relative group/sub">
                     <button 
                       onClick={() => removeSubItem(index, sIdx)}
-                      className="absolute -top-1 -right-1 p-0.5 bg-red-50 text-red-400 rounded-full opacity-0 group-hover/sub:opacity-100"
+                      className="absolute -top-1 -right-1 p-0.5 bg-red-50 text-red-400 rounded-full sm:opacity-0 sm:group-hover/sub:opacity-100"
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
-                    <div className="col-span-1 flex items-center">
-                      <input 
-                        className="w-full text-center text-[10px] font-bold text-gray-400 bg-transparent"
-                        value={child.label}
-                        onChange={(e) => handleSubItemChange(index, sIdx, 'label', e.target.value)}
-                      />
-                    </div>
-                    <div className="col-span-11">
-                      <div className="grid grid-cols-12 gap-2">
-                        <div className="col-span-7">
+                    
+                    <div className="flex flex-col space-y-3">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-8 shrink-0">
+                          <input 
+                            className="w-full text-center text-[10px] font-bold text-gray-400 bg-gray-50 rounded"
+                            value={child.label}
+                            onChange={(e) => handleSubItemChange(index, sIdx, 'label', e.target.value)}
+                          />
+                        </div>
+                        <div className="flex-1">
                           <input 
                             placeholder="Detail..."
-                            className="w-full p-1.5 text-xs border rounded-md"
+                            className="w-full p-1.5 text-xs border rounded-md font-bold"
                             value={child.description}
                             onChange={(e) => handleSubItemChange(index, sIdx, 'description', e.target.value)}
                           />
-                          <input 
-                            placeholder="Note..."
-                            className="w-full p-1 mt-0.5 text-[10px] italic border-b outline-none border-gray-50"
-                            value={child.notes}
-                            onChange={(e) => handleSubItemChange(index, sIdx, 'notes', e.target.value)}
-                          />
                         </div>
-                        <div className="col-span-1 pt-1 text-[10px]">
-                           <span className="block text-gray-300 font-bold text-center">QT</span>
-                           <input type="number" className="w-full text-center p-0.5 outline-none font-bold" value={child.qty} onChange={(e) => handleSubItemChange(index, sIdx, 'qty', parseFloat(e.target.value) || 0)} />
-                        </div>
-                        <div className="col-span-1 pt-1 text-[10px]">
-                            <span className="block text-gray-300 font-bold text-center">UN</span>
-                            <input className="w-full text-center p-0.5 uppercase outline-none font-bold" value={child.unit} onChange={(e) => handleSubItemChange(index, sIdx, 'unit', e.target.value)} />
-                        </div>
-                        <div className="col-span-3 pt-1 text-[10px]">
-                            <span className="block text-gray-300 font-bold text-right pr-2">RATE</span>
-                            <input type="number" className="w-full text-right p-0.5 outline-none font-bold pr-2" value={child.rate} onChange={(e) => handleSubItemChange(index, sIdx, 'rate', parseFloat(e.target.value) || 0)} />
-                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-2">
+                         <div>
+                            <span className="block text-[8px] text-gray-400 font-bold uppercase text-center">Qty</span>
+                            <input type="number" className="w-full text-center p-1 text-xs border rounded bg-gray-50 font-bold" value={child.qty} onChange={(e) => handleSubItemChange(index, sIdx, 'qty', parseFloat(e.target.value) || 0)} />
+                         </div>
+                         <div>
+                             <span className="block text-[8px] text-gray-400 font-bold uppercase text-center">Unit</span>
+                             <input className="w-full text-center p-1 text-xs border rounded bg-gray-50 uppercase font-bold" value={child.unit} onChange={(e) => handleSubItemChange(index, sIdx, 'unit', e.target.value)} />
+                         </div>
+                         <div>
+                             <span className="block text-[8px] text-gray-400 font-bold uppercase text-right pr-1">Rate</span>
+                             <input type="number" className="w-full text-right p-1 text-xs border rounded bg-gray-50 font-bold" value={child.rate} onChange={(e) => handleSubItemChange(index, sIdx, 'rate', parseFloat(e.target.value) || 0)} />
+                         </div>
+                      </div>
+
+                      <div className="pt-1">
+                        <input 
+                          placeholder="Add Note (e.g. EXTRA KM FEB TO JUN)"
+                          className="w-full p-1.5 text-[9px] italic bg-yellow-50/50 rounded border border-yellow-100/50 outline-none"
+                          value={child.notes}
+                          onChange={(e) => handleSubItemChange(index, sIdx, 'notes', e.target.value)}
+                        />
                       </div>
                     </div>
                   </div>
                 ))}
                 <button 
                   onClick={() => addSubItem(index)}
-                  className="w-full py-1 border border-dashed border-blue-200 rounded-lg text-blue-500 hover:bg-blue-50 flex items-center justify-center text-[10px] font-bold uppercase transition-colors"
+                  className="w-full py-2 border border-dashed border-blue-200 rounded-lg text-blue-500 hover:bg-blue-50 flex items-center justify-center text-[10px] font-bold uppercase transition-colors"
                 >
                   <Plus className="w-3 h-3 mr-1" />
                   Add Service Detail

@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import InvoiceForm from '@/components/InvoiceForm';
 import InvoiceTemplate from '@/components/InvoiceTemplate';
+import { Eye, Edit3 } from 'lucide-react';
 
 export default function NewInvoicePage() {
+  const [activeTab, setActiveTab] = useState('edit'); // 'edit' or 'preview'
   const [invoiceData, setInvoiceData] = useState({
     poNumber: '4400026168',
     date: '2026-04-15',
@@ -50,7 +52,7 @@ export default function NewInvoicePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...invoiceData,
-          vendorId: invoiceData.vendor?._id // ensure ID is passed
+          vendorId: invoiceData.vendor?._id
         }),
       });
     } catch (e) {
@@ -98,19 +100,47 @@ export default function NewInvoicePage() {
   };
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-full overflow-hidden bg-gray-50">
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden flex bg-white border-b sticky top-0 z-20">
+        <button 
+          onClick={() => setActiveTab('edit')}
+          className={`flex-1 py-3 text-sm font-bold flex items-center justify-center border-b-2 transition-all ${activeTab === 'edit' ? 'border-blue-600 text-blue-600 bg-blue-50/50' : 'border-transparent text-gray-400'}`}
+        >
+          <Edit3 className="w-4 h-4 mr-2" />
+          Edit Details
+        </button>
+        <button 
+          onClick={() => setActiveTab('preview')}
+          className={`flex-1 py-3 text-sm font-bold flex items-center justify-center border-b-2 transition-all ${activeTab === 'preview' ? 'border-blue-600 text-blue-600 bg-blue-50/50' : 'border-transparent text-gray-400'}`}
+        >
+          <Eye className="w-4 h-4 mr-2" />
+          View Preview
+        </button>
+      </div>
+
       {/* Form Area */}
-      <div className="w-[500px] border-r bg-white overflow-y-auto h-full">
-         <InvoiceForm 
-            onPreviewUpdate={handlePreviewUpdate} 
-            onDownload={handleDownloadPDF} 
-          />
+      <div className={`
+        ${activeTab === 'edit' ? 'flex' : 'hidden'} lg:flex
+        w-full lg:w-[480px] xl:w-[500px] lg:border-r bg-white overflow-y-auto h-full lg:shrink-0
+      `}>
+         <div className="w-full h-full">
+           <InvoiceForm 
+              onPreviewUpdate={handlePreviewUpdate} 
+              onDownload={handleDownloadPDF} 
+            />
+         </div>
       </div>
 
       {/* Preview Area */}
-      <div className="flex-1 p-8 overflow-y-auto flex justify-center items-start bg-gray-100">
-        <div className="transform scale-[0.7] xl:scale-[0.8] origin-top shadow-2xl mb-20">
-          <InvoiceTemplate data={invoiceData} />
+      <div className={`
+        ${activeTab === 'preview' ? 'flex' : 'hidden'} lg:flex
+        flex-1 p-4 md:p-8 overflow-y-auto justify-center items-start bg-gray-100/50 backdrop-blur-sm
+      `}>
+        <div className="w-full flex justify-center py-10 lg:py-0">
+          <div className="transform scale-[0.45] sm:scale-[0.6] md:scale-[0.7] lg:scale-[0.75] xl:scale-[0.85] origin-top shadow-2xl transition-transform duration-300">
+            <InvoiceTemplate data={invoiceData} />
+          </div>
         </div>
       </div>
     </div>

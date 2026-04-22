@@ -54,15 +54,15 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
-      <header className="mb-10 flex justify-between items-end">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto">
+      <header className="mb-8 md:mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">Dashboard Overview</h1>
-          <p className="text-gray-500 mt-1">Welcome back. Here is what is happening with your invoices.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Dashboard Overview</h1>
+          <p className="text-gray-500 mt-1 text-sm md:text-base">Welcome back. Here is what is happening with your invoices.</p>
         </div>
         <Link 
           href="/invoices/new"
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all"
+          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all w-full md:w-auto"
         >
           <Plus className="w-5 h-5 mr-2" />
           New Invoice

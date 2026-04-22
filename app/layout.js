@@ -1,5 +1,5 @@
 import './globals.css';
-import Sidebar from '@/components/Sidebar';
+import Navigation from '@/components/Navigation';
 
 export const metadata = {
   title: 'Invoice Pro | Managed Generator',
@@ -9,11 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50 flex h-screen overflow-hidden">
-        <Sidebar />
-        <main className="flex-1 overflow-y-auto relative bg-gray-50">
+      <body className="bg-gray-50 flex h-screen overflow-hidden flex-col lg:flex-row font-sans text-[17px]">
+        <Navigation>
           {children}
-        </main>
+        </Navigation>
       </body>
     </html>
   );

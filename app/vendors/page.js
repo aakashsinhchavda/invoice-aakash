@@ -73,18 +73,18 @@ const VendorsPage = () => {
   );
 
   return (
-    <div className="p-8 max-w-6xl mx-auto text-[17px]">
-      <header className="mb-8 flex justify-between items-end">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto text-[17px]">
+      <header className="mb-8 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">Vendor Directory</h1>
-          <p className="text-gray-500 mt-1">Manage your certified suppliers and their billing credentials.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Vendor Directory</h1>
+          <p className="text-gray-500 mt-1 text-sm md:text-base">Manage your certified suppliers and their billing credentials.</p>
         </div>
         <button 
           onClick={() => {
             setCurrentVendor({ name: '', address: '', gst: '', vendorCode: '', contact: '' });
             setShowModal(true);
           }}
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all"
+          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all w-full md:w-auto"
         >
           <UserPlus className="w-5 h-5 mr-2" />
           Register Supplier
