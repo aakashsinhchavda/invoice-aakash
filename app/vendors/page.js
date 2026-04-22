@@ -54,6 +54,19 @@ const VendorsPage = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this vendor? This action cannot be undone.')) return;
+    
+    try {
+      const res = await fetch(`/api/vendors/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchVendors();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const filteredVendors = vendors.filter(v => 
     v.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     v.vendorCode?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -123,7 +136,10 @@ const VendorsPage = () => {
                  >
                    <Edit2 className="w-3 h-3 mr-2" /> Edit
                  </button>
-                 <button className="w-10 h-10 flex items-center justify-center text-red-400 hover:bg-red-50 rounded-lg transition-colors">
+                 <button 
+                  onClick={() => handleDelete(vendor._id)}
+                  className="w-10 h-10 flex items-center justify-center text-red-400 hover:bg-red-50 rounded-lg transition-colors"
+                 >
                    <Trash2 className="w-4 h-4" />
                  </button>
                </div>

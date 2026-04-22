@@ -8,7 +8,8 @@ import {
   FileText, 
   ChevronRight,
   Filter,
-  Calendar
+  Calendar,
+  Trash2
 } from 'lucide-react';
 
 const InvoicesPage = () => {
@@ -29,6 +30,19 @@ const InvoicesPage = () => {
       console.error(e);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this invoice? This action cannot be undone.')) return;
+    
+    try {
+      const res = await fetch(`/api/invoices/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchInvoices();
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -110,6 +124,12 @@ const InvoicesPage = () => {
                       <div className="flex justify-end space-x-2">
                         <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors rounded-lg bg-gray-50 hover:bg-blue-50">
                           <Download className="w-4 h-4" />
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(inv._id)}
+                          className="p-2 text-gray-400 hover:text-red-500 transition-colors rounded-lg"
+                        >
+                          <Trash2 className="w-4 h-4" />
                         </button>
                         <button className="p-2 text-gray-400 hover:text-gray-900 transition-colors rounded-lg">
                           <ChevronRight className="w-4 h-4" />

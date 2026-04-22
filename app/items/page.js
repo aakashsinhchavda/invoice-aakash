@@ -77,6 +77,19 @@ const ItemsLibraryPage = () => {
     setCurrentItem({ ...currentItem, defaultChildren: newChildren });
   };
 
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this service group? This action cannot be undone.')) return;
+    
+    try {
+      const res = await fetch(`/api/items/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchItems();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const filteredItems = items.filter(item => 
     item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.sac?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -136,7 +149,10 @@ const ItemsLibraryPage = () => {
                    >
                      <Edit2 className="w-4 h-4" />
                    </button>
-                   <button className="p-2 text-gray-400 hover:text-red-500 transition-colors bg-white border border-gray-100 rounded-lg shadow-sm">
+                   <button 
+                    onClick={() => handleDelete(group._id)}
+                    className="p-2 text-gray-400 hover:text-red-500 transition-colors bg-white border border-gray-100 rounded-lg shadow-sm"
+                   >
                      <Trash2 className="w-4 h-4" />
                    </button>
                 </div>
