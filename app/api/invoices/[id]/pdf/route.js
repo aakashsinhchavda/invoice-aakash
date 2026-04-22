@@ -3,7 +3,7 @@ import dbConnect from '@/lib/mongodb';
 import Invoice from '@/models/Invoice';
 import puppeteer from 'puppeteer';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+
 import InvoiceTemplate from '@/components/InvoiceTemplate';
 
 export async function GET(req, { params }) {
@@ -23,7 +23,8 @@ export async function GET(req, { params }) {
     };
 
     // Render HTML
-    const invoiceHtml = renderToString(<InvoiceTemplate data={invoiceData} />);
+    const { renderToStaticMarkup } = await import('react-dom/server');
+    const invoiceHtml = renderToStaticMarkup(<InvoiceTemplate data={invoiceData} />);
 
     const fullHtml = `
       <!DOCTYPE html>
