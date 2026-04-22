@@ -42,12 +42,21 @@ export default function NewInvoicePage() {
     setInvoiceData(data);
   };
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const handleDownloadPDF = async () => {
-    const invoiceHtml = document.getElementById('invoice-template').outerHTML;
+    const element = document.getElementById('invoice-template');
+    if (!element) {
+      alert("Error: Invoice template not found. Please try again.");
+      return;
+    }
+
+    setIsDownloading(true);
+    const invoiceHtml = element.outerHTML;
     
     // Save to database first
     try {
-      await fetch('/api/invoices', {
+      const saveResponse = await fetch('/api/invoices', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -55,6 +64,10 @@ export default function NewInvoicePage() {
           vendorId: invoiceData.vendor?._id
         }),
       });
+      
+      if (!saveResponse.ok) {
+        console.warn("Failed to save invoice to history, but proceeding with download.");
+      }
     } catch (e) {
       console.warn("Failed to save invoice to history", e);
     }
@@ -93,9 +106,15 @@ export default function NewInvoicePage() {
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
+      } else {
+        const errData = await response.json();
+        throw new Error(errData.error || 'Failed to generate PDF');
       }
     } catch (error) {
       console.error('Error downloading PDF:', error);
+      alert(`Error generating PDF: ${error.message}. Please check if the server is running correctly.`);
+    } finally {
+      setIsDownloading(false);
     }
   };
 
@@ -128,6 +147,7 @@ export default function NewInvoicePage() {
            <InvoiceForm 
               onPreviewUpdate={handlePreviewUpdate} 
               onDownload={handleDownloadPDF} 
+              isDownloading={isDownloading}
             />
          </div>
       </div>
