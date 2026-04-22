@@ -1,4 +1,5 @@
 import React from 'react';
+import { LOGO_BASE64 } from '@/lib/logo';
 
 const InvoiceTemplate = ({ data }) => {
   const safeData = data || {};
@@ -21,7 +22,7 @@ const InvoiceTemplate = ({ data }) => {
 
   const Logo = () => (
     <img
-      src="/logo.png"
+      src={`data:image/png;base64,${LOGO_BASE64}`}
       alt="SW Logo"
       className="w-16 h-auto"
     />
